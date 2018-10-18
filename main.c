@@ -30,6 +30,77 @@
 #include "SEGGER_RTT.h"
 #include "math.h"
 
+//Registers
+const uint8_t CHANNEL_COMMAND = 0;
+const uint8_t CHANNEL_EXECUTABLE = 1;
+const uint8_t CHANNEL_CONTROL = 2;
+const uint8_t CHANNEL_REPORTS = 3;
+const uint8_t CHANNEL_WAKE_REPORTS = 4;
+const uint8_t CHANNEL_GYRO = 5;
+
+//All the ways we can configure or talk to the BNO080, figure 34, page 36 reference manual
+//These are used for low level communication with the sensor, on channel 2
+#define SHTP_REPORT_COMMAND_RESPONSE 0xF1
+#define SHTP_REPORT_COMMAND_REQUEST 0xF2
+#define SHTP_REPORT_FRS_READ_RESPONSE 0xF3
+#define SHTP_REPORT_FRS_READ_REQUEST 0xF4
+#define SHTP_REPORT_PRODUCT_ID_RESPONSE 0xF8
+#define SHTP_REPORT_PRODUCT_ID_REQUEST 0xF9
+#define SHTP_REPORT_BASE_TIMESTAMP 0xFB
+#define SHTP_REPORT_SET_FEATURE_COMMAND 0xFD
+
+//All the different sensors and features we can get reports from
+//These are used when enabling a given sensor
+#define SENSOR_REPORTID_ACCELEROMETER 0x01
+#define SENSOR_REPORTID_GYROSCOPE 0x02
+#define SENSOR_REPORTID_MAGNETIC_FIELD 0x03
+#define SENSOR_REPORTID_LINEAR_ACCELERATION 0x04
+#define SENSOR_REPORTID_ROTATION_VECTOR 0x05
+#define SENSOR_REPORTID_GRAVITY 0x06
+#define SENSOR_REPORTID_GAME_ROTATION_VECTOR 0x08
+#define SENSOR_REPORTID_GEOMAGNETIC_ROTATION_VECTOR 0x09
+#define SENSOR_REPORTID_TAP_DETECTOR 0x10
+#define SENSOR_REPORTID_STEP_COUNTER 0x11
+#define SENSOR_REPORTID_STABILITY_CLASSIFIER 0x13
+#define SENSOR_REPORTID_PERSONAL_ACTIVITY_CLASSIFIER 0x1E
+
+//Record IDs from figure 29, page 29 reference manual
+//These are used to read the metadata for each sensor type
+#define FRS_RECORDID_ACCELEROMETER 0xE302
+#define FRS_RECORDID_GYROSCOPE_CALIBRATED 0xE306
+#define FRS_RECORDID_MAGNETIC_FIELD_CALIBRATED 0xE309
+#define FRS_RECORDID_ROTATION_VECTOR 0xE30B
+
+//Command IDs from section 6.4, page 42
+//These are used to calibrate, initialize, set orientation, tare etc the sensor
+#define COMMAND_ERRORS 1
+#define COMMAND_COUNTER 2
+#define COMMAND_TARE 3
+#define COMMAND_INITIALIZE 4
+#define COMMAND_DCD 6
+#define COMMAND_ME_CALIBRATE 7
+#define COMMAND_DCD_PERIOD_SAVE 9
+#define COMMAND_OSCILLATOR 10
+#define COMMAND_CLEAR_DCD 11
+
+#define CALIBRATE_ACCEL 0
+#define CALIBRATE_GYRO 1
+#define CALIBRATE_MAG 2
+#define CALIBRATE_PLANAR_ACCEL 3
+#define CALIBRATE_ACCEL_GYRO_MAG 4
+#define CALIBRATE_STOP 5
+
+#define MAX_PACKET_SIZE 128 //Packets can be up to 32k but we don't have that much RAM.
+#define MAX_METADATA_SIZE 9 //This is in words. There can be many but we mostly only care about the first 9 (Qs, range, etc)
+
+//Global Variables
+uint8_t shtpHeader[4]; //Each packet has a header of 4 bytes
+uint8_t shtpData[MAX_PACKET_SIZE];
+uint8_t sequenceNumber[6] = {0, 0, 0, 0, 0, 0}; //There are 6 com channels. Each channel has its own seqnum
+uint8_t commandSequenceNumber = 0; //Commands have a seqNum as well. These are inside command packet, the header uses its own seqNum per channel
+uint32_t metaData[MAX_METADATA_SIZE]; //There is more than 10 words in a metadata record but
+
+
 /*Pins to connect shield. */
 #define ARDUINO_I2C_SCL_PIN 7
 #define ARDUINO_I2C_SDA_PIN 30
@@ -56,27 +127,7 @@
 #define BNO_ADDRESS               	0x4B            // Device address when SA0 Pin 17 = GND; 0x4B SA0 Pin 17 = VDD
 #define QP(n)                       (1.0f / (1 << n))                   // 1 << n ==  2^-n
 #define radtodeg                    (180.0f / (22/7))
-#define MAX_METADATA_SIZE           9
-#define MAX_PACKET_SIZE             20            
-
-//Registers
-const uint8_t CHANNEL_COMMAND = 0;
-const uint8_t CHANNEL_EXECUTABLE = 1;
-const uint8_t CHANNEL_CONTROL = 2;
-const uint8_t CHANNEL_REPORTS = 3;
-const uint8_t CHANNEL_WAKE_REPORTS = 4;
-const uint8_t CHANNEL_GYRO = 5;
-
-//All the ways we can configure or talk to the BNO080, figure 34, page 36 reference manual
-//These are used for low level communication with the sensor, on channel 2
-#define SHTP_REPORT_COMMAND_RESPONSE 0xF1
-#define SHTP_REPORT_COMMAND_REQUEST 0xF2
-#define SHTP_REPORT_FRS_READ_RESPONSE 0xF3
-#define SHTP_REPORT_FRS_READ_REQUEST 0xF4
-#define SHTP_REPORT_PRODUCT_ID_RESPONSE 0xF8
-#define SHTP_REPORT_PRODUCT_ID_REQUEST 0xF9
-#define SHTP_REPORT_BASE_TIMESTAMP 0xFB
-#define SHTP_REPORT_SET_FEATURE_COMMAND 0xFD
+           
 
 
 /* Mode for MMA7660. */
@@ -169,7 +220,7 @@ static uint8_t readSuccess = 0;                             // confirms quaterni
 static float q0,q1,q2,q3;                                		// quaternions q0 = qw 1 = i; 2 = j; 3 = k;
 static float h_est;                                      		// heading accurracy estimation
 static uint8_t stat_;                                    		// Status (0-3)
-uint8_t cargo[50] = {0}; 																	// holds in coming data
+static uint8_t cargo[23] = {0}; 																	// holds in coming data
 static float quatI = 0;
 static float quatJ = 0;
 static float quatK = 0;
@@ -178,16 +229,6 @@ static bool reset = false;
 static bool requestID = false;
 uint8_t i2C_event = 0;
 
-// i2C SHTP protocol
-// Length LSB
-// Length MSB
-// Channel
-// Sequence Num
-uint8_t SHTP_HEADER[4] = {0};
-uint8_t shtpData[MAX_PACKET_SIZE];
-uint8_t sequenceNumber[6] = {0, 0, 0, 0, 0, 0}; //There are 6 com channels. Each channel has its own seqnum
-uint8_t commandSequenceNumber = 0; //Commands have a seqNum as well. These are inside command packet, the header uses its own seqNum per channel
-uint32_t metaData[MAX_METADATA_SIZE]; //There is more than 10 words in a metadata record but we'll stop at Q point 3
 
 // function prototypes
 static void set_feature_cmd_QUAT(); 												// configure quaternion output
@@ -195,7 +236,8 @@ float qToFloat_(int16_t, uint8_t);    											// convert q point data into fl
 static void sendPacket_IMU(uint8_t, uint8_t);               // send data to IMU
 void resetIMU();                                            // reset the IMU
 void requestProductID();                                    // request the product ID
-
+bool sendDataPacket(uint8_t channelNumber, uint8_t dataLength);
+bool setFeature(uint8_t reportID, uint16_t timeBetweenReports, uint32_t specificConfig);
 /**
  * @brief Function for casting 6 bit uint to 6 bit int.
  *
@@ -343,8 +385,9 @@ void read_data(sample_t * p_new_sample)
 void twi_handler(nrf_drv_twi_evt_t const * p_event, void * p_context)
 {   
     ret_code_t err_code;
-    static sample_t m_sample;
+    //static sample_t m_sample;
     readSuccess = 0;                           // nothing read
+		int s = 0;
 	
     switch(p_event->type)
     {
@@ -366,9 +409,9 @@ void twi_handler(nrf_drv_twi_evt_t const * p_event, void * p_context)
                 read_data(&m_sample);
                 m_xfer_done = true;
             }*/
-						SEGGER_RTT_printf(0,"TWI EVT DONE: %d\r\n", p_event->xfer_desc.type);
+						/*SEGGER_RTT_printf(0,"TWI EVT DONE: %d\r\n", p_event->xfer_desc.type);
 						SEGGER_RTT_printf(0,"request ID: %d\r\n", requestID);
-						SEGGER_RTT_printf(0,"reset: %d\r\n", reset);
+						SEGGER_RTT_printf(0,"reset: %d\r\n", reset);*/
 				
 						if((p_event->xfer_desc.type == NRF_DRV_TWI_XFER_TX)) // receive event
 						{ 
@@ -379,42 +422,26 @@ void twi_handler(nrf_drv_twi_evt_t const * p_event, void * p_context)
 								}
 								else 
 									
-								err_code = nrf_drv_twi_rx(&m_twi_bno, BNO_ADDRESS, cargo, sizeof(cargo));
-								SEGGER_RTT_printf(0,"Err code: %d\r\n", err_code);
-								//APP_ERROR_CHECK(err_code);	
-								
-								
-								/*if(reset == true)// read all incoming metadata
-								{  	
-										err_code = nrf_drv_twi_rx(&m_twi_bno, BNO_ADDRESS, cargo, 4);
-										APP_ERROR_CHECK(err_code);
-										i2C_event++;
-										for(uint8_t i = 0; i < 23; i++)SEGGER_RTT_printf(0,"%d,", cargo[i]);
-										SEGGER_RTT_printf(0,"\r\n");*
-								}
-								else if(requestID == true)
-								{
-										err_code = nrf_drv_twi_rx(&m_twi_bno, BNO_ADDRESS, cargo, sizeof(cargo));
-										APP_ERROR_CHECK(err_code);
-										for(uint8_t i = 0; i < 23; i++)SEGGER_RTT_printf(0,"%d,", cargo[i]);
-										SEGGER_RTT_printf(0,"\r\n");*
-								}*/
+								err_code = nrf_drv_twi_rx(&m_twi_bno, BNO_ADDRESS, (uint8_t*)&cargo, sizeof(cargo));
+								APP_ERROR_CHECK(err_code);	
 						}
 						else{
-								if(reset == true)// read all incoming metadata
+								//SEGGER_RTT_printf(0,"RX EVENT\r\n");
+								readSuccess = true;
+								/*if(reset == true)// read all incoming metadata
 								{  	
 										//Calculate the number of data bytes in this packet
 										int16_t dataLength = ((uint16_t)cargo[1] << 8 | cargo[0]);
 										dataLength &= ~(1 << 15); //Clear the MSbit.
 										SEGGER_RTT_printf(0,"%d\r\n",dataLength);	
 										err_code = nrf_drv_twi_rx(&m_twi_bno, BNO_ADDRESS, (uint8_t*)&cargo, sizeof(cargo));
-										if(i2C_event == 6) reset = false;
+										if(i2C_event == 12) reset = false;
 										i2C_event++;
 										
 										for(uint8_t i = 0; i < 23; i++)SEGGER_RTT_printf(0,"%d,", cargo[i]);
 										SEGGER_RTT_printf(0,"\r\n");
 										/*err_code = nrf_drv_twi_rx(&m_twi_bno, BNO_ADDRESS, (uint8_t*)&cargo, sizeof(cargo));
-										APP_ERROR_CHECK(err_code);*/
+										APP_ERROR_CHECK(err_code);*
 										
 								}
 								else if(requestID == true)
@@ -426,7 +453,8 @@ void twi_handler(nrf_drv_twi_evt_t const * p_event, void * p_context)
 										//APP_ERROR_CHECK(err_code);
 										for(uint8_t i = 0; i < 23; i++)SEGGER_RTT_printf(0,"%d,", cargo[i]);
 										SEGGER_RTT_printf(0,"\r\n");
-								}
+										if(cargo[4] == SHTP_REPORT_PRODUCT_ID_RESPONSE)requestID = false;
+								}*/
 						}
             break;
         default:
@@ -463,40 +491,31 @@ void initializeIMU(){
 		
 		// check if i2C communication is sucessful
 		err_code = nrf_drv_twi_tx(&m_twi_bno, BNO_ADDRESS, reg, sizeof(reg), false);  
-    APP_ERROR_CHECK(err_code);
-		nrf_delay_ms(10);
-		
+		nrf_delay_ms(10);		
     while (!initialized){	
       //SEGGER_RTT_printf(0,".");
     }
 		SEGGER_RTT_printf(0,"IMU Available!\r\n");
+		nrf_delay_ms(100);
+		if(setFeature(SENSOR_REPORTID_ROTATION_VECTOR, 10, 0))
+		{
+				SEGGER_RTT_printf(0,"Quats set");
+		}
+		nrf_delay_ms(100);
 		
-		resetIMU();
+		/*resetIMU();
 		while(reset)
 		{
 			nrf_delay_ms(1);
 		}
-		
-		//nrf_delay_ms(1000);
-		requestProductID();
+		nrf_delay_ms(1000);
+		/*requestProductID();
 		while(requestID)
 		{
 			nrf_delay_ms(1);
-		}
+		}*/
 		
-    /*err_code = nrf_drv_twi_tx(&m_twi_bno, BNO_ADDRESS, reg, sizeof(reg), false);  
-    APP_ERROR_CHECK(err_code);
-		nrf_delay_ms(10);*/
-		
-		/*SEGGER_RTT_printf(0,"Initializing\r\n");
-    while (!initialized){	
-      //SEGGER_RTT_printf(0,".");
-    }
-		SEGGER_RTT_printf(0,"Done!\r\n");*/
-    //Serial.println("BNO found");
-    //nrf_delay_ms(100);                     //needed to accept feature command; minimum not tested
     //set_feature_cmd_QUAT();                // set the required feature report data rate  are generated  at preset report interval
-		
 }
 
 /**
@@ -506,7 +525,8 @@ static void set_feature_cmd_QUAT()// quat_report determines the kind of quaterni
 {                                 
 		ret_code_t err_code;
 		uint8_t quat_setup[21] = {21,0,2,0,0xFD,quat_report,0,0,0,B0_rate,B1_rate,0,0,0,0,0,0,0,0,0,0};  
-		err_code = nrf_drv_twi_tx(&m_twi_bno, BNO_ADDRESS, quat_setup, sizeof(quat_setup), false);  
+		err_code = nrf_drv_twi_tx(&m_twi_bno, BNO_ADDRESS, quat_setup, sizeof(quat_setup), false);
+		nrf_delay_ms(10);			
 		APP_ERROR_CHECK(err_code);
 		SEGGER_RTT_printf(0,"Quats enabled \r\n");
     /*Wire.beginTransmission(BNO_ADDRESS);   
@@ -519,30 +539,33 @@ static void get_QUAT()
 {  
     readSuccess = 0;       
 		ret_code_t err_code;	
-		uint8_t reg[2] = {0, 0};
+		uint8_t reg[4] = {0, 0};
 		
-		err_code = nrf_drv_twi_tx(&m_twi_bno, BNO_ADDRESS, reg, sizeof(reg), false);  
-		APP_ERROR_CHECK(err_code);
+		err_code = nrf_drv_twi_rx(&m_twi_bno, BNO_ADDRESS, (uint8_t*)&cargo, sizeof(cargo));
+		//nrf_delay_ms(10);
+		//APP_ERROR_CHECK(err_code);
 		while(!readSuccess){
 				// do nothing
 		}
-    //Wire.requestFrom(BNO_ADDRESS,23);
-    /*while (Wire.available()){
-        if(readSuccess == 0)readSuccess = 1;
-        cargo[j] = Wire.read();
-        j++;
-    }*/
 
     //Check to see if this packet is a sensor reporting its data to us
     if((readSuccess == 1) && (cargo[9] == quat_report) && (cargo[2] == 0x03) && (cargo[4] == 0xFB)){    //  && ((cargo[10]) == next_data_seqNum ) check for report and incrementing data seqNum
-        //next_data_seqNum = ++cargo[10];                                         // predict next data seqNum              
+        //SEGGER_RTT_printf(0,"Read data is valid\r\n");
+				//next_data_seqNum = ++cargo[10];                                         // predict next data seqNum              
         stat_ = cargo[11] & 0x03;                                                 // bits 1:0 contain the status (0,1,2,3)  
-    
-        float qI = (((int16_t)cargo[14] << 8) | cargo[13] ); 
+				//for(uint8_t i = 0; i < 8; i++)SEGGER_RTT_printf(0,"%d, ", cargo[13 + i]);
+        //SEGGER_RTT_printf(0,"\r\n");
+		
+				float qI = (((int16_t)cargo[14] << 8) | cargo[13] ); 
         float qJ = (((int16_t)cargo[16] << 8) | cargo[15] );
         float qK = (((int16_t)cargo[18] << 8) | cargo[17] );
         float qReal = (((int16_t)cargo[20] << 8) | cargo[19] ); 
-
+		
+				/*SEGGER_RTT_printf(0,"%d, ", qI);
+				SEGGER_RTT_printf(0,"%d, ", qJ);
+				SEGGER_RTT_printf(0,"%d, ", qK);
+				SEGGER_RTT_printf(0,"%d\r\n", qReal);*/
+		
         quatReal = qToFloat_(qReal, 14); //pow(2, 14 * -1);//QP(14); 
         quatI = qToFloat_(qI, 14); //pow(2, 14 * -1);//QP(14); 
         quatJ = qToFloat_(qJ, 14); //pow(2, 14 * -1);//QP(14); 
@@ -577,6 +600,7 @@ static void sendPacket_IMU(uint8_t channelNumber, uint8_t packetLength)
 		shtpData[3] = sequenceNumber[channelNumber]++;
 		
 		err_code = nrf_drv_twi_tx(&m_twi_bno, BNO_ADDRESS, shtpData, sizeof(shtpData), false); 
+		nrf_delay_ms(10);
 		APP_ERROR_CHECK(err_code);
 		
 		/*shtpData[0] = 5 & 0xFF;
@@ -629,6 +653,59 @@ void requestProductID()
 		sendPacket_IMU(CHANNEL_CONTROL, 6);
 }
 
+
+
+
+//Given a sensor's report ID, this tells the BNO080 to begin reporting the values
+//Also sets the specific config word. Useful for personal activity classifier
+bool setFeature(uint8_t reportID, uint16_t timeBetweenReports, uint32_t specificConfig)
+{
+		long microsBetweenReports = (long)timeBetweenReports * 1000L;
+		
+		shtpData[4] = SHTP_REPORT_SET_FEATURE_COMMAND; //Set feature command. Reference page 55
+		shtpData[5] = reportID; //Feature Report ID. 0x01 = Accelerometer, 0x05 = Rotation vector
+		shtpData[6] = 0; //Feature flags
+		shtpData[7] = 0; //Change sensitivity (LSB)
+		shtpData[8] = 0; //Change sensitivity (MSB)
+		shtpData[9] = (microsBetweenReports >> 0) & 0xFF; //Report interval (LSB) in microseconds. 0x7A120 = 500ms
+		shtpData[10] = (microsBetweenReports >> 8) & 0xFF; //Report interval
+		shtpData[11] = (microsBetweenReports >> 16) & 0xFF; //Report interval
+		shtpData[12] = (microsBetweenReports >> 24) & 0xFF; //Report interval (MSB)
+		shtpData[13] = 0; //Batch Interval (LSB)
+		shtpData[14] = 0; //Batch Interval
+		shtpData[15] = 0; //Batch Interval
+		shtpData[16] = 0; //Batch Interval (MSB)
+		shtpData[17] = (specificConfig >> 0) & 0xFF; //Sensor-specific config (LSB)
+		shtpData[18] = (specificConfig >> 8) & 0xFF; //Sensor-specific config
+		shtpData[19] = (specificConfig >> 16) & 0xFF; //Sensor-specific config
+		shtpData[20] = (specificConfig >> 24) & 0xFF; //Sensor-specific config (MSB)
+
+		//Transmit packet on channel 2, 17 bytes
+		return sendDataPacket(CHANNEL_CONTROL, 17);
+}
+
+bool sendDataPacket(uint8_t channelNumber, uint8_t dataLength)
+{
+    uint8_t packetLength = dataLength + 4; //Add four bytes for the header
+		ret_code_t err_code;
+    //if(packetLength > I2C_BUFFER_LENGTH) return(false); //You are trying to send too much. Break into smaller packets.
+
+    //set the 4 byte packet header
+    shtpData[0] = packetLength & 0xFF; //Set feature command. Reference page 55
+		shtpData[1] = packetLength >> 8; //Feature Report ID. 0x01 = Accelerometer, 0x05 = Rotation vector
+		shtpData[2] = channelNumber; //Feature flags
+		shtpData[3] = sequenceNumber[channelNumber]++; //Change sensitivity (LSB)
+    
+		err_code = nrf_drv_twi_tx(&m_twi_bno, BNO_ADDRESS, shtpData, sizeof(shtpData), false);  
+		nrf_delay_ms(10);
+	
+    if (err_code != 0)
+    {
+      return (false);
+    }
+    return true;
+}
+
 /**
  * @brief Function for main application entry.
  */
@@ -638,22 +715,19 @@ int main(void)
    // int a = __GNUC__, c = __GNUC_PATCHLEVEL__;
     SEGGER_RTT_printf(0,"\n\rTWI sensor example\r\n");
     twi_init();
-		SEGGER_RTT_printf(0,"\n\rTWI intited\r\n");
+		SEGGER_RTT_printf(0,"\n\rTWI initiated\r\n");
 		initializeIMU();
-		SEGGER_RTT_printf(0,"\n\rIMU inited\r\n");
+		SEGGER_RTT_printf(0,"\n\rIMU initialted\r\n");
     
     //uint8_t reg = 0;
     //ret_code_t err_code;
-    
+    uint8_t str[128]; //Declared globally
     while(true)
     {
-				/*get_QUAT();
-				SEGGER_RTT_printf(0, "%f,", quatReal);
-				SEGGER_RTT_printf(0, "%f,", quatI);
-				SEGGER_RTT_printf(0, "%f,", quatJ);
-				SEGGER_RTT_printf(0, "%f,", quatK);
+				get_QUAT();
+				sprintf((char*)&str[0], "%3.2f, %3.2f, %3.2f, %3.2f", quatReal, quatI, quatJ, quatK);
+				SEGGER_RTT_printf(0, "%s\n",str);
 				nrf_delay_ms(10);
-				//nrf_delay_ms(100);
         /* Start transaction with a slave with the specified address. */
         /*do
         {
