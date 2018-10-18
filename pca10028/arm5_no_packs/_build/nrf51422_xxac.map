@@ -1157,81 +1157,81 @@ Image Symbol Table
     i.is_manual_peripheral_setup_needed      0x0001d8c8   Section        0  system_nrf51.o(i.is_manual_peripheral_setup_needed)
     is_manual_peripheral_setup_needed        0x0001d8c9   Thumb Code    66  system_nrf51.o(i.is_manual_peripheral_setup_needed)
     i.main                                   0x0001d910   Section        0  main.o(i.main)
-    i.nrf_delay_ms                           0x0001d9e8   Section        0  nrf_delay.o(i.nrf_delay_ms)
-    i.nrf_drv_common_irq_enable              0x0001da04   Section        0  nrf_drv_common.o(i.nrf_drv_common_irq_enable)
-    i.nrf_drv_twi_enable                     0x0001da64   Section        0  nrf_drv_twi.o(i.nrf_drv_twi_enable)
-    i.nrf_drv_twi_init                       0x0001da84   Section        0  nrf_drv_twi.o(i.nrf_drv_twi_init)
-    i.nrf_drv_twi_rx                         0x0001db14   Section        0  nrf_drv_twi.o(i.nrf_drv_twi_rx)
-    i.nrf_drv_twi_tx                         0x0001db38   Section        0  nrf_drv_twi.o(i.nrf_drv_twi_tx)
-    i.nrf_drv_twi_xfer                       0x0001db5c   Section        0  nrf_drv_twi.o(i.nrf_drv_twi_xfer)
-    i.nrf_gpio_pin_set                       0x0001db84   Section        0  nrf_drv_twi.o(i.nrf_gpio_pin_set)
-    nrf_gpio_pin_set                         0x0001db85   Thumb Code    10  nrf_drv_twi.o(i.nrf_gpio_pin_set)
-    i.nrf_twi_event_check                    0x0001db94   Section        0  nrf_drv_twi.o(i.nrf_twi_event_check)
-    nrf_twi_event_check                      0x0001db95   Thumb Code    10  nrf_drv_twi.o(i.nrf_twi_event_check)
-    i.nrf_uart_event_check                   0x0001db9e   Section        0  nrf_drv_uart.o(i.nrf_uart_event_check)
-    nrf_uart_event_check                     0x0001db9f   Thumb Code    10  nrf_drv_uart.o(i.nrf_uart_event_check)
-    i.nrf_uart_int_enable_check              0x0001dba8   Section        0  nrf_drv_uart.o(i.nrf_uart_int_enable_check)
-    nrf_uart_int_enable_check                0x0001dba9   Thumb Code    16  nrf_drv_uart.o(i.nrf_uart_int_enable_check)
-    i.pow                                    0x0001dbb8   Section        0  pow.o(i.pow)
-    i.qToFloat_                              0x0001e5b4   Section        0  main.o(i.qToFloat_)
-    i.rx_byte                                0x0001e5ec   Section        0  nrf_drv_uart.o(i.rx_byte)
-    rx_byte                                  0x0001e5ed   Thumb Code    42  nrf_drv_uart.o(i.rx_byte)
-    i.rx_done_event                          0x0001e624   Section        0  nrf_drv_uart.o(i.rx_done_event)
-    rx_done_event                            0x0001e625   Thumb Code    22  nrf_drv_uart.o(i.rx_done_event)
-    i.sendDataPacket                         0x0001e640   Section        0  main.o(i.sendDataPacket)
-    i.setFeature                             0x0001e684   Section        0  main.o(i.setFeature)
-    i.sqrt                                   0x0001e6d0   Section        0  sqrt.o(i.sqrt)
-    i.twi_clear_bus                          0x0001e718   Section        0  nrf_drv_twi.o(i.twi_clear_bus)
-    twi_clear_bus                            0x0001e719   Thumb Code   138  nrf_drv_twi.o(i.twi_clear_bus)
-    i.twi_handler                            0x0001e7b0   Section        0  main.o(i.twi_handler)
-    i.twi_init                               0x0001e7f8   Section        0  main.o(i.twi_init)
-    i.twi_rx_start_transfer                  0x0001e82c   Section        0  nrf_drv_twi.o(i.twi_rx_start_transfer)
-    twi_rx_start_transfer                    0x0001e82d   Thumb Code   134  nrf_drv_twi.o(i.twi_rx_start_transfer)
-    i.twi_send_byte                          0x0001e8b8   Section        0  nrf_drv_twi.o(i.twi_send_byte)
-    twi_send_byte                            0x0001e8b9   Thumb Code    46  nrf_drv_twi.o(i.twi_send_byte)
-    i.twi_transfer                           0x0001e8e6   Section        0  nrf_drv_twi.o(i.twi_transfer)
-    twi_transfer                             0x0001e8e7   Thumb Code   262  nrf_drv_twi.o(i.twi_transfer)
-    i.twi_tx_start_transfer                  0x0001e9ec   Section        0  nrf_drv_twi.o(i.twi_tx_start_transfer)
-    twi_tx_start_transfer                    0x0001e9ed   Thumb Code   136  nrf_drv_twi.o(i.twi_tx_start_transfer)
-    i.twi_xfer                               0x0001ea78   Section        0  nrf_drv_twi.o(i.twi_xfer)
-    twi_xfer                                 0x0001ea79   Thumb Code   140  nrf_drv_twi.o(i.twi_xfer)
-    i.tx_byte                                0x0001eb04   Section        0  nrf_drv_uart.o(i.tx_byte)
-    tx_byte                                  0x0001eb05   Thumb Code    30  nrf_drv_uart.o(i.tx_byte)
-    i.tx_done_event                          0x0001eb30   Section        0  nrf_drv_uart.o(i.tx_done_event)
-    tx_done_event                            0x0001eb31   Thumb Code    26  nrf_drv_uart.o(i.tx_done_event)
-    i.uart_irq_handler                       0x0001eb50   Section        0  nrf_drv_uart.o(i.uart_irq_handler)
-    uart_irq_handler                         0x0001eb51   Thumb Code   278  nrf_drv_uart.o(i.uart_irq_handler)
-    locale$$code                             0x0001ec78   Section       44  lc_numeric_c.o(locale$$code)
-    x$fpl$drleqf                             0x0001eca4   Section      104  drlef.o(x$fpl$drleqf)
-    x$fpl$fmul                               0x0001ed0c   Section      176  fmul.o(x$fpl$fmul)
-    x$fpl$printf1                            0x0001edbc   Section       16  printf1.o(x$fpl$printf1)
-    .constdata                               0x0001edcc   Section       24  main.o(.constdata)
-    x$fpl$usenofp                            0x0001edcc   Section        0  usenofp.o(x$fpl$usenofp)
-    m_twi_bno                                0x0001edcc   Data           8  main.o(.constdata)
-    .constdata                               0x0001ede4   Section       28  nrf_drv_twi.o(.constdata)
-    m_default_config                         0x0001ede4   Data          16  nrf_drv_twi.o(.constdata)
-    .constdata                               0x0001ee00   Section       16  segger_rtt_printf.o(.constdata)
-    _aV2C                                    0x0001ee00   Data          16  segger_rtt_printf.o(.constdata)
-    .constdata                               0x0001ee10   Section      136  pow.o(.constdata)
-    bp                                       0x0001ee10   Data          16  pow.o(.constdata)
-    dp_h                                     0x0001ee20   Data          16  pow.o(.constdata)
-    dp_l                                     0x0001ee30   Data          16  pow.o(.constdata)
-    L                                        0x0001ee40   Data          48  pow.o(.constdata)
-    P                                        0x0001ee70   Data          40  pow.o(.constdata)
-    .constdata                               0x0001ee98   Section      128  ddiv.o(.constdata)
-    ddiv_reciptbl                            0x0001ee98   Data         128  ddiv.o(.constdata)
-    .constdata                               0x0001ef18   Section        8  qnan.o(.constdata)
-    .constdata                               0x0001ef20   Section      148  bigflt0.o(.constdata)
-    tenpwrs_x                                0x0001ef20   Data          60  bigflt0.o(.constdata)
-    tenpwrs_i                                0x0001ef5c   Data          64  bigflt0.o(.constdata)
-    .conststring                             0x0001efb4   Section        9  segger_rtt.o(.conststring)
-    locale$$data                             0x0001efe0   Section       28  lc_numeric_c.o(locale$$data)
-    __lcnum_c_name                           0x0001efe4   Data           2  lc_numeric_c.o(locale$$data)
-    __lcnum_c_start                          0x0001efec   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_point                          0x0001eff8   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_thousands                      0x0001effa   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_grouping                       0x0001effb   Data           0  lc_numeric_c.o(locale$$data)
-    __lcnum_c_end                            0x0001effc   Data           0  lc_numeric_c.o(locale$$data)
+    i.nrf_delay_ms                           0x0001d9f0   Section        0  nrf_delay.o(i.nrf_delay_ms)
+    i.nrf_drv_common_irq_enable              0x0001da0c   Section        0  nrf_drv_common.o(i.nrf_drv_common_irq_enable)
+    i.nrf_drv_twi_enable                     0x0001da6c   Section        0  nrf_drv_twi.o(i.nrf_drv_twi_enable)
+    i.nrf_drv_twi_init                       0x0001da8c   Section        0  nrf_drv_twi.o(i.nrf_drv_twi_init)
+    i.nrf_drv_twi_rx                         0x0001db1c   Section        0  nrf_drv_twi.o(i.nrf_drv_twi_rx)
+    i.nrf_drv_twi_tx                         0x0001db40   Section        0  nrf_drv_twi.o(i.nrf_drv_twi_tx)
+    i.nrf_drv_twi_xfer                       0x0001db64   Section        0  nrf_drv_twi.o(i.nrf_drv_twi_xfer)
+    i.nrf_gpio_pin_set                       0x0001db8c   Section        0  nrf_drv_twi.o(i.nrf_gpio_pin_set)
+    nrf_gpio_pin_set                         0x0001db8d   Thumb Code    10  nrf_drv_twi.o(i.nrf_gpio_pin_set)
+    i.nrf_twi_event_check                    0x0001db9c   Section        0  nrf_drv_twi.o(i.nrf_twi_event_check)
+    nrf_twi_event_check                      0x0001db9d   Thumb Code    10  nrf_drv_twi.o(i.nrf_twi_event_check)
+    i.nrf_uart_event_check                   0x0001dba6   Section        0  nrf_drv_uart.o(i.nrf_uart_event_check)
+    nrf_uart_event_check                     0x0001dba7   Thumb Code    10  nrf_drv_uart.o(i.nrf_uart_event_check)
+    i.nrf_uart_int_enable_check              0x0001dbb0   Section        0  nrf_drv_uart.o(i.nrf_uart_int_enable_check)
+    nrf_uart_int_enable_check                0x0001dbb1   Thumb Code    16  nrf_drv_uart.o(i.nrf_uart_int_enable_check)
+    i.pow                                    0x0001dbc0   Section        0  pow.o(i.pow)
+    i.qToFloat_                              0x0001e5bc   Section        0  main.o(i.qToFloat_)
+    i.rx_byte                                0x0001e5f4   Section        0  nrf_drv_uart.o(i.rx_byte)
+    rx_byte                                  0x0001e5f5   Thumb Code    42  nrf_drv_uart.o(i.rx_byte)
+    i.rx_done_event                          0x0001e62c   Section        0  nrf_drv_uart.o(i.rx_done_event)
+    rx_done_event                            0x0001e62d   Thumb Code    22  nrf_drv_uart.o(i.rx_done_event)
+    i.sendDataPacket                         0x0001e648   Section        0  main.o(i.sendDataPacket)
+    i.setFeature                             0x0001e68c   Section        0  main.o(i.setFeature)
+    i.sqrt                                   0x0001e6d8   Section        0  sqrt.o(i.sqrt)
+    i.twi_clear_bus                          0x0001e720   Section        0  nrf_drv_twi.o(i.twi_clear_bus)
+    twi_clear_bus                            0x0001e721   Thumb Code   138  nrf_drv_twi.o(i.twi_clear_bus)
+    i.twi_handler                            0x0001e7b8   Section        0  main.o(i.twi_handler)
+    i.twi_init                               0x0001e800   Section        0  main.o(i.twi_init)
+    i.twi_rx_start_transfer                  0x0001e834   Section        0  nrf_drv_twi.o(i.twi_rx_start_transfer)
+    twi_rx_start_transfer                    0x0001e835   Thumb Code   134  nrf_drv_twi.o(i.twi_rx_start_transfer)
+    i.twi_send_byte                          0x0001e8c0   Section        0  nrf_drv_twi.o(i.twi_send_byte)
+    twi_send_byte                            0x0001e8c1   Thumb Code    46  nrf_drv_twi.o(i.twi_send_byte)
+    i.twi_transfer                           0x0001e8ee   Section        0  nrf_drv_twi.o(i.twi_transfer)
+    twi_transfer                             0x0001e8ef   Thumb Code   262  nrf_drv_twi.o(i.twi_transfer)
+    i.twi_tx_start_transfer                  0x0001e9f4   Section        0  nrf_drv_twi.o(i.twi_tx_start_transfer)
+    twi_tx_start_transfer                    0x0001e9f5   Thumb Code   136  nrf_drv_twi.o(i.twi_tx_start_transfer)
+    i.twi_xfer                               0x0001ea80   Section        0  nrf_drv_twi.o(i.twi_xfer)
+    twi_xfer                                 0x0001ea81   Thumb Code   140  nrf_drv_twi.o(i.twi_xfer)
+    i.tx_byte                                0x0001eb0c   Section        0  nrf_drv_uart.o(i.tx_byte)
+    tx_byte                                  0x0001eb0d   Thumb Code    30  nrf_drv_uart.o(i.tx_byte)
+    i.tx_done_event                          0x0001eb38   Section        0  nrf_drv_uart.o(i.tx_done_event)
+    tx_done_event                            0x0001eb39   Thumb Code    26  nrf_drv_uart.o(i.tx_done_event)
+    i.uart_irq_handler                       0x0001eb58   Section        0  nrf_drv_uart.o(i.uart_irq_handler)
+    uart_irq_handler                         0x0001eb59   Thumb Code   278  nrf_drv_uart.o(i.uart_irq_handler)
+    locale$$code                             0x0001ec80   Section       44  lc_numeric_c.o(locale$$code)
+    x$fpl$drleqf                             0x0001ecac   Section      104  drlef.o(x$fpl$drleqf)
+    x$fpl$fmul                               0x0001ed14   Section      176  fmul.o(x$fpl$fmul)
+    x$fpl$printf1                            0x0001edc4   Section       16  printf1.o(x$fpl$printf1)
+    .constdata                               0x0001edd4   Section       24  main.o(.constdata)
+    x$fpl$usenofp                            0x0001edd4   Section        0  usenofp.o(x$fpl$usenofp)
+    m_twi_bno                                0x0001edd4   Data           8  main.o(.constdata)
+    .constdata                               0x0001edec   Section       28  nrf_drv_twi.o(.constdata)
+    m_default_config                         0x0001edec   Data          16  nrf_drv_twi.o(.constdata)
+    .constdata                               0x0001ee08   Section       16  segger_rtt_printf.o(.constdata)
+    _aV2C                                    0x0001ee08   Data          16  segger_rtt_printf.o(.constdata)
+    .constdata                               0x0001ee18   Section      136  pow.o(.constdata)
+    bp                                       0x0001ee18   Data          16  pow.o(.constdata)
+    dp_h                                     0x0001ee28   Data          16  pow.o(.constdata)
+    dp_l                                     0x0001ee38   Data          16  pow.o(.constdata)
+    L                                        0x0001ee48   Data          48  pow.o(.constdata)
+    P                                        0x0001ee78   Data          40  pow.o(.constdata)
+    .constdata                               0x0001eea0   Section      128  ddiv.o(.constdata)
+    ddiv_reciptbl                            0x0001eea0   Data         128  ddiv.o(.constdata)
+    .constdata                               0x0001ef20   Section        8  qnan.o(.constdata)
+    .constdata                               0x0001ef28   Section      148  bigflt0.o(.constdata)
+    tenpwrs_x                                0x0001ef28   Data          60  bigflt0.o(.constdata)
+    tenpwrs_i                                0x0001ef64   Data          64  bigflt0.o(.constdata)
+    .conststring                             0x0001efbc   Section        9  segger_rtt.o(.conststring)
+    locale$$data                             0x0001efe8   Section       28  lc_numeric_c.o(locale$$data)
+    __lcnum_c_name                           0x0001efec   Data           2  lc_numeric_c.o(locale$$data)
+    __lcnum_c_start                          0x0001eff4   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_point                          0x0001f000   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_thousands                      0x0001f002   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_grouping                       0x0001f003   Data           0  lc_numeric_c.o(locale$$data)
+    __lcnum_c_end                            0x0001f004   Data           0  lc_numeric_c.o(locale$$data)
     .data                                    0x20001870   Section       40  main.o(.data)
     m_set_mode_done                          0x20001870   Data           1  main.o(.data)
     initialized                              0x20001871   Data           1  main.o(.data)
@@ -1492,30 +1492,30 @@ Image Symbol Table
     app_error_handler_bare                   0x0001d6a5   Thumb Code    20  app_error.o(i.app_error_handler_bare)
     initializeIMU                            0x0001d7a5   Thumb Code    78  main.o(i.initializeIMU)
     main                                     0x0001d911   Thumb Code   122  main.o(i.main)
-    nrf_delay_ms                             0x0001d9e9   Thumb Code    24  nrf_delay.o(i.nrf_delay_ms)
-    nrf_drv_common_irq_enable                0x0001da05   Thumb Code    78  nrf_drv_common.o(i.nrf_drv_common_irq_enable)
-    nrf_drv_twi_enable                       0x0001da65   Thumb Code    28  nrf_drv_twi.o(i.nrf_drv_twi_enable)
-    nrf_drv_twi_init                         0x0001da85   Thumb Code   126  nrf_drv_twi.o(i.nrf_drv_twi_init)
-    nrf_drv_twi_rx                           0x0001db15   Thumb Code    30  nrf_drv_twi.o(i.nrf_drv_twi_rx)
-    nrf_drv_twi_tx                           0x0001db39   Thumb Code    36  nrf_drv_twi.o(i.nrf_drv_twi_tx)
-    nrf_drv_twi_xfer                         0x0001db5d   Thumb Code    36  nrf_drv_twi.o(i.nrf_drv_twi_xfer)
-    pow                                      0x0001dbb9   Thumb Code  2548  pow.o(i.pow)
-    qToFloat_                                0x0001e5b5   Thumb Code    54  main.o(i.qToFloat_)
-    sendDataPacket                           0x0001e641   Thumb Code    56  main.o(i.sendDataPacket)
-    setFeature                               0x0001e685   Thumb Code    70  main.o(i.setFeature)
-    sqrt                                     0x0001e6d1   Thumb Code    66  sqrt.o(i.sqrt)
-    twi_handler                              0x0001e7b1   Thumb Code    58  main.o(i.twi_handler)
-    twi_init                                 0x0001e7f9   Thumb Code    42  main.o(i.twi_init)
-    _get_lc_numeric                          0x0001ec79   Thumb Code    44  lc_numeric_c.o(locale$$code)
-    __aeabi_cdrcmple                         0x0001eca5   Thumb Code     0  drlef.o(x$fpl$drleqf)
-    _drcmple                                 0x0001eca5   Thumb Code   100  drlef.o(x$fpl$drleqf)
-    __aeabi_fmul                             0x0001ed0d   Thumb Code     0  fmul.o(x$fpl$fmul)
-    _fmul                                    0x0001ed0d   Thumb Code   172  fmul.o(x$fpl$fmul)
-    _printf_fp_dec                           0x0001edbd   Thumb Code    16  printf1.o(x$fpl$printf1)
-    __I$use$fp                               0x0001edcc   Number         0  usenofp.o(x$fpl$usenofp)
-    __mathlib_zero                           0x0001ef18   Data           8  qnan.o(.constdata)
-    Region$$Table$$Base                      0x0001efc0   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x0001efe0   Number         0  anon$$obj.o(Region$$Table)
+    nrf_delay_ms                             0x0001d9f1   Thumb Code    24  nrf_delay.o(i.nrf_delay_ms)
+    nrf_drv_common_irq_enable                0x0001da0d   Thumb Code    78  nrf_drv_common.o(i.nrf_drv_common_irq_enable)
+    nrf_drv_twi_enable                       0x0001da6d   Thumb Code    28  nrf_drv_twi.o(i.nrf_drv_twi_enable)
+    nrf_drv_twi_init                         0x0001da8d   Thumb Code   126  nrf_drv_twi.o(i.nrf_drv_twi_init)
+    nrf_drv_twi_rx                           0x0001db1d   Thumb Code    30  nrf_drv_twi.o(i.nrf_drv_twi_rx)
+    nrf_drv_twi_tx                           0x0001db41   Thumb Code    36  nrf_drv_twi.o(i.nrf_drv_twi_tx)
+    nrf_drv_twi_xfer                         0x0001db65   Thumb Code    36  nrf_drv_twi.o(i.nrf_drv_twi_xfer)
+    pow                                      0x0001dbc1   Thumb Code  2548  pow.o(i.pow)
+    qToFloat_                                0x0001e5bd   Thumb Code    54  main.o(i.qToFloat_)
+    sendDataPacket                           0x0001e649   Thumb Code    56  main.o(i.sendDataPacket)
+    setFeature                               0x0001e68d   Thumb Code    70  main.o(i.setFeature)
+    sqrt                                     0x0001e6d9   Thumb Code    66  sqrt.o(i.sqrt)
+    twi_handler                              0x0001e7b9   Thumb Code    58  main.o(i.twi_handler)
+    twi_init                                 0x0001e801   Thumb Code    42  main.o(i.twi_init)
+    _get_lc_numeric                          0x0001ec81   Thumb Code    44  lc_numeric_c.o(locale$$code)
+    __aeabi_cdrcmple                         0x0001ecad   Thumb Code     0  drlef.o(x$fpl$drleqf)
+    _drcmple                                 0x0001ecad   Thumb Code   100  drlef.o(x$fpl$drleqf)
+    __aeabi_fmul                             0x0001ed15   Thumb Code     0  fmul.o(x$fpl$fmul)
+    _fmul                                    0x0001ed15   Thumb Code   172  fmul.o(x$fpl$fmul)
+    _printf_fp_dec                           0x0001edc5   Thumb Code    16  printf1.o(x$fpl$printf1)
+    __I$use$fp                               0x0001edd4   Number         0  usenofp.o(x$fpl$usenofp)
+    __mathlib_zero                           0x0001ef20   Data           8  qnan.o(.constdata)
+    Region$$Table$$Base                      0x0001efc8   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x0001efe8   Number         0  anon$$obj.o(Region$$Table)
     sequenceNumber                           0x2000188c   Data           6  main.o(.data)
     SystemCoreClock                          0x20001914   Data           4  system_nrf51.o(.data)
     shtpData                                 0x2000197f   Data         128  main.o(.bss)
@@ -1530,9 +1530,9 @@ Memory Map of the image
 
   Image Entry point : 0x0001b0c1
 
-  Load Region LR_IROM1 (Base: 0x0001b000, Size: 0x000040a4, Max: 0x00025000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x0001b000, Size: 0x000040ac, Max: 0x00025000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Base: 0x0001b000, Size: 0x00003ffc, Max: 0x00025000, ABSOLUTE)
+    Execution Region ER_IROM1 (Base: 0x0001b000, Size: 0x00004004, Max: 0x00025000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -1666,53 +1666,53 @@ Memory Map of the image
     0x0001d7a4   0x00000078   Code   RO            6    i.initializeIMU     main.o
     0x0001d81c   0x000000ac   Code   RO          376    i.irq_handler_twi   nrf_drv_twi.o
     0x0001d8c8   0x00000048   Code   RO         1115    i.is_manual_peripheral_setup_needed  system_nrf51.o
-    0x0001d910   0x000000d8   Code   RO            8    i.main              main.o
-    0x0001d9e8   0x0000001c   Code   RO          314    i.nrf_delay_ms      nrf_delay.o
-    0x0001da04   0x00000060   Code   RO          341    i.nrf_drv_common_irq_enable  nrf_drv_common.o
-    0x0001da64   0x00000020   Code   RO          379    i.nrf_drv_twi_enable  nrf_drv_twi.o
-    0x0001da84   0x00000090   Code   RO          380    i.nrf_drv_twi_init  nrf_drv_twi.o
-    0x0001db14   0x00000024   Code   RO          381    i.nrf_drv_twi_rx    nrf_drv_twi.o
-    0x0001db38   0x00000024   Code   RO          384    i.nrf_drv_twi_tx    nrf_drv_twi.o
-    0x0001db5c   0x00000028   Code   RO          386    i.nrf_drv_twi_xfer  nrf_drv_twi.o
-    0x0001db84   0x00000010   Code   RO          387    i.nrf_gpio_pin_set  nrf_drv_twi.o
-    0x0001db94   0x0000000a   Code   RO          388    i.nrf_twi_event_check  nrf_drv_twi.o
-    0x0001db9e   0x0000000a   Code   RO          537    i.nrf_uart_event_check  nrf_drv_uart.o
-    0x0001dba8   0x00000010   Code   RO          538    i.nrf_uart_int_enable_check  nrf_drv_uart.o
-    0x0001dbb8   0x000009fc   Code   RO         1235    i.pow               m_ps.l(pow.o)
-    0x0001e5b4   0x00000036   Code   RO            9    i.qToFloat_         main.o
-    0x0001e5ea   0x00000002   PAD
-    0x0001e5ec   0x00000038   Code   RO          539    i.rx_byte           nrf_drv_uart.o
-    0x0001e624   0x0000001c   Code   RO          540    i.rx_done_event     nrf_drv_uart.o
-    0x0001e640   0x00000044   Code   RO           13    i.sendDataPacket    main.o
-    0x0001e684   0x0000004c   Code   RO           15    i.setFeature        main.o
-    0x0001e6d0   0x00000048   Code   RO         1307    i.sqrt              m_ps.l(sqrt.o)
-    0x0001e718   0x00000098   Code   RO          389    i.twi_clear_bus     nrf_drv_twi.o
-    0x0001e7b0   0x00000048   Code   RO           16    i.twi_handler       main.o
-    0x0001e7f8   0x00000034   Code   RO           17    i.twi_init          main.o
-    0x0001e82c   0x0000008c   Code   RO          390    i.twi_rx_start_transfer  nrf_drv_twi.o
-    0x0001e8b8   0x0000002e   Code   RO          391    i.twi_send_byte     nrf_drv_twi.o
-    0x0001e8e6   0x00000106   Code   RO          392    i.twi_transfer      nrf_drv_twi.o
-    0x0001e9ec   0x0000008c   Code   RO          393    i.twi_tx_start_transfer  nrf_drv_twi.o
-    0x0001ea78   0x0000008c   Code   RO          394    i.twi_xfer          nrf_drv_twi.o
-    0x0001eb04   0x0000002c   Code   RO          542    i.tx_byte           nrf_drv_uart.o
-    0x0001eb30   0x00000020   Code   RO          543    i.tx_done_event     nrf_drv_uart.o
-    0x0001eb50   0x00000128   Code   RO          544    i.uart_irq_handler  nrf_drv_uart.o
-    0x0001ec78   0x0000002c   Code   RO         1429    locale$$code        c_p.l(lc_numeric_c.o)
-    0x0001eca4   0x00000068   Code   RO         1282    x$fpl$drleqf        fz_ps.l(drlef.o)
-    0x0001ed0c   0x000000b0   Code   RO         1228    x$fpl$fmul          fz_ps.l(fmul.o)
-    0x0001edbc   0x00000010   Code   RO         1232    x$fpl$printf1       fz_ps.l(printf1.o)
-    0x0001edcc   0x00000000   Code   RO         1286    x$fpl$usenofp       fz_ps.l(usenofp.o)
-    0x0001edcc   0x00000018   Data   RO           26    .constdata          main.o
-    0x0001ede4   0x0000001c   Data   RO          396    .constdata          nrf_drv_twi.o
-    0x0001ee00   0x00000010   Data   RO          984    .constdata          segger_rtt_printf.o
-    0x0001ee10   0x00000088   Data   RO         1236    .constdata          m_ps.l(pow.o)
-    0x0001ee98   0x00000080   Data   RO         1280    .constdata          fz_ps.l(ddiv.o)
-    0x0001ef18   0x00000008   Data   RO         1305    .constdata          m_ps.l(qnan.o)
-    0x0001ef20   0x00000094   Data   RO         1406    .constdata          c_p.l(bigflt0.o)
-    0x0001efb4   0x00000009   Data   RO          910    .conststring        segger_rtt.o
-    0x0001efbd   0x00000003   PAD
-    0x0001efc0   0x00000020   Data   RO         1633    Region$$Table       anon$$obj.o
-    0x0001efe0   0x0000001c   Data   RO         1428    locale$$data        c_p.l(lc_numeric_c.o)
+    0x0001d910   0x000000e0   Code   RO            8    i.main              main.o
+    0x0001d9f0   0x0000001c   Code   RO          314    i.nrf_delay_ms      nrf_delay.o
+    0x0001da0c   0x00000060   Code   RO          341    i.nrf_drv_common_irq_enable  nrf_drv_common.o
+    0x0001da6c   0x00000020   Code   RO          379    i.nrf_drv_twi_enable  nrf_drv_twi.o
+    0x0001da8c   0x00000090   Code   RO          380    i.nrf_drv_twi_init  nrf_drv_twi.o
+    0x0001db1c   0x00000024   Code   RO          381    i.nrf_drv_twi_rx    nrf_drv_twi.o
+    0x0001db40   0x00000024   Code   RO          384    i.nrf_drv_twi_tx    nrf_drv_twi.o
+    0x0001db64   0x00000028   Code   RO          386    i.nrf_drv_twi_xfer  nrf_drv_twi.o
+    0x0001db8c   0x00000010   Code   RO          387    i.nrf_gpio_pin_set  nrf_drv_twi.o
+    0x0001db9c   0x0000000a   Code   RO          388    i.nrf_twi_event_check  nrf_drv_twi.o
+    0x0001dba6   0x0000000a   Code   RO          537    i.nrf_uart_event_check  nrf_drv_uart.o
+    0x0001dbb0   0x00000010   Code   RO          538    i.nrf_uart_int_enable_check  nrf_drv_uart.o
+    0x0001dbc0   0x000009fc   Code   RO         1235    i.pow               m_ps.l(pow.o)
+    0x0001e5bc   0x00000036   Code   RO            9    i.qToFloat_         main.o
+    0x0001e5f2   0x00000002   PAD
+    0x0001e5f4   0x00000038   Code   RO          539    i.rx_byte           nrf_drv_uart.o
+    0x0001e62c   0x0000001c   Code   RO          540    i.rx_done_event     nrf_drv_uart.o
+    0x0001e648   0x00000044   Code   RO           13    i.sendDataPacket    main.o
+    0x0001e68c   0x0000004c   Code   RO           15    i.setFeature        main.o
+    0x0001e6d8   0x00000048   Code   RO         1307    i.sqrt              m_ps.l(sqrt.o)
+    0x0001e720   0x00000098   Code   RO          389    i.twi_clear_bus     nrf_drv_twi.o
+    0x0001e7b8   0x00000048   Code   RO           16    i.twi_handler       main.o
+    0x0001e800   0x00000034   Code   RO           17    i.twi_init          main.o
+    0x0001e834   0x0000008c   Code   RO          390    i.twi_rx_start_transfer  nrf_drv_twi.o
+    0x0001e8c0   0x0000002e   Code   RO          391    i.twi_send_byte     nrf_drv_twi.o
+    0x0001e8ee   0x00000106   Code   RO          392    i.twi_transfer      nrf_drv_twi.o
+    0x0001e9f4   0x0000008c   Code   RO          393    i.twi_tx_start_transfer  nrf_drv_twi.o
+    0x0001ea80   0x0000008c   Code   RO          394    i.twi_xfer          nrf_drv_twi.o
+    0x0001eb0c   0x0000002c   Code   RO          542    i.tx_byte           nrf_drv_uart.o
+    0x0001eb38   0x00000020   Code   RO          543    i.tx_done_event     nrf_drv_uart.o
+    0x0001eb58   0x00000128   Code   RO          544    i.uart_irq_handler  nrf_drv_uart.o
+    0x0001ec80   0x0000002c   Code   RO         1429    locale$$code        c_p.l(lc_numeric_c.o)
+    0x0001ecac   0x00000068   Code   RO         1282    x$fpl$drleqf        fz_ps.l(drlef.o)
+    0x0001ed14   0x000000b0   Code   RO         1228    x$fpl$fmul          fz_ps.l(fmul.o)
+    0x0001edc4   0x00000010   Code   RO         1232    x$fpl$printf1       fz_ps.l(printf1.o)
+    0x0001edd4   0x00000000   Code   RO         1286    x$fpl$usenofp       fz_ps.l(usenofp.o)
+    0x0001edd4   0x00000018   Data   RO           26    .constdata          main.o
+    0x0001edec   0x0000001c   Data   RO          396    .constdata          nrf_drv_twi.o
+    0x0001ee08   0x00000010   Data   RO          984    .constdata          segger_rtt_printf.o
+    0x0001ee18   0x00000088   Data   RO         1236    .constdata          m_ps.l(pow.o)
+    0x0001eea0   0x00000080   Data   RO         1280    .constdata          fz_ps.l(ddiv.o)
+    0x0001ef20   0x00000008   Data   RO         1305    .constdata          m_ps.l(qnan.o)
+    0x0001ef28   0x00000094   Data   RO         1406    .constdata          c_p.l(bigflt0.o)
+    0x0001efbc   0x00000009   Data   RO          910    .conststring        segger_rtt.o
+    0x0001efc5   0x00000003   PAD
+    0x0001efc8   0x00000020   Data   RO         1633    Region$$Table       anon$$obj.o
+    0x0001efe8   0x0000001c   Data   RO         1428    locale$$data        c_p.l(lc_numeric_c.o)
 
 
     Execution Region RW_IRAM1 (Base: 0x20001870, Size: 0x00001648, Max: 0x00002790, ABSOLUTE)
@@ -1744,7 +1744,7 @@ Image component sizes
         24          4          0          0          0       2133   app_error.o
         28         10          0          0          0       7050   app_error_weak.o
         84         36        192          0       4096        740   arm_startup_nrf51.o
-       890        196         24         40        231      38725   main.o
+       898        204         24         40        231      38725   main.o
         58          4          0          0          0       1639   nrf_delay.o
         96         18          0          0          0       7268   nrf_drv_common.o
       1416         70         28          0         40      27576   nrf_drv_twi.o
@@ -1755,7 +1755,7 @@ Image component sizes
        232         36          0          4          0       2199   system_nrf51.o
 
     ----------------------------------------------------------------------
-      4380        440        304        168       5436     110314   Object Totals
+      4388        448        304        168       5436     110314   Object Totals
          0          0         32          0          0          0   (incl. Generated)
          8          0          3          0          1          0   (incl. Padding)
 
@@ -1851,15 +1851,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     15628        876        752        168       5536     110786   Grand Totals
-     15628        876        752        168       5536     110786   ELF Image Totals
-     15628        876        752        168          0          0   ROM Totals
+     15636        884        752        168       5536     110786   Grand Totals
+     15636        884        752        168       5536     110786   ELF Image Totals
+     15636        884        752        168          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                16380 (  16.00kB)
+    Total RO  Size (Code + RO Data)                16388 (  16.00kB)
     Total RW  Size (RW Data + ZI Data)              5704 (   5.57kB)
-    Total ROM Size (Code + RO Data + RW Data)      16548 (  16.16kB)
+    Total ROM Size (Code + RO Data + RW Data)      16556 (  16.17kB)
 
 ==============================================================================
 

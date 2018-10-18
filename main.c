@@ -542,7 +542,7 @@ static void get_QUAT()
 		uint8_t reg[4] = {0, 0};
 		
 		err_code = nrf_drv_twi_rx(&m_twi_bno, BNO_ADDRESS, (uint8_t*)&cargo, sizeof(cargo));
-		//nrf_delay_ms(10);
+		nrf_delay_ms(10);
 		//APP_ERROR_CHECK(err_code);
 		while(!readSuccess){
 				// do nothing
