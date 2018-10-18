@@ -27,7 +27,50 @@ Project File Date:  03/10/2016
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 3 (build 300)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'nrf51822_xxaa'
-".\_build\nrf51422_xxac.axf" - 0 Error(s), 0 Warning(s).
+compiling main.c...
+..\..\main.c(166): warning:  #69-D: integer conversion resulted in truncation
+  const uint8_t B0_rate = 1000000 / reporting_frequency;      // calculate LSB (byte 0)
+..\..\main.c(193): warning:  #1295-D: Deprecated declaration set_feature_cmd_QUAT - give arg types
+  static void set_feature_cmd_QUAT(); 												// configure quaternion output
+..\..\main.c(196): warning:  #1295-D: Deprecated declaration resetIMU - give arg types
+  void resetIMU();                                            // reset the IMU
+..\..\main.c(197): warning:  #1295-D: Deprecated declaration requestProductID - give arg types
+  void requestProductID();                                    // request the product ID
+..\..\main.c(360): warning:  #9-D: nested comment is not allowed
+                  /* Read 4 bytes from the specified address. 
+..\..\main.c(346): warning:  #177-D: variable "m_sample" was declared but never referenced
+      static sample_t m_sample;
+..\..\main.c(666): warning:  #9-D: nested comment is not allowed
+          /* Start transaction with a slave with the specified address. */
+..\..\main.c(169): warning:  #177-D: variable "q0" was declared but never referenced
+  static float q0,q1,q2,q3;                                		// quaternions q0 = qw 1 = i; 2 = j; 3 = k;
+..\..\main.c(169): warning:  #177-D: variable "q1" was declared but never referenced
+  static float q0,q1,q2,q3;                                		// quaternions q0 = qw 1 = i; 2 = j; 3 = k;
+..\..\main.c(169): warning:  #177-D: variable "q2" was declared but never referenced
+  static float q0,q1,q2,q3;                                		// quaternions q0 = qw 1 = i; 2 = j; 3 = k;
+..\..\main.c(169): warning:  #177-D: variable "q3" was declared but never referenced
+  static float q0,q1,q2,q3;                                		// quaternions q0 = qw 1 = i; 2 = j; 3 = k;
+..\..\main.c(171): warning:  #550-D: variable "stat_" was set but never used
+  static uint8_t stat_;                                    		// Status (0-3)
+..\..\main.c(173): warning:  #550-D: variable "quatI" was set but never used
+  static float quatI = 0;
+..\..\main.c(174): warning:  #550-D: variable "quatJ" was set but never used
+  static float quatJ = 0;
+..\..\main.c(175): warning:  #550-D: variable "quatK" was set but never used
+  static float quatK = 0;
+..\..\main.c(176): warning:  #550-D: variable "quatReal" was set but never used
+  static float quatReal = 0;
+..\..\main.c(514): warning:  #177-D: function "set_feature_cmd_QUAT" was declared but never referenced
+  static void set_feature_cmd_QUAT()// quat_report determines the kind of quaternions (see data sheets)
+..\..\main.c(235): warning:  #177-D: function "uart_config" was declared but never referenced
+  static void uart_config(void)
+..\..\main.c(527): warning:  #177-D: function "get_QUAT" was declared but never referenced
+  static void get_QUAT()
+..\..\main.c: 19 warnings, 0 errors
+linking...
+Program Size: Code=4792 RO-data=304 RW-data=148 ZI-data=5428  
+FromELF: creating hex file...
+".\_build\nrf51422_xxac.axf" - 0 Error(s), 19 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -57,7 +100,7 @@ Package Vendor: NordicSemiconductor
       Source file:   Device\Source\arm\arm_startup_nrf51.s
       Source file:   Device\Source\system_nrf51.c
       Include file:  Device\Include\system_nrf51.h
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>

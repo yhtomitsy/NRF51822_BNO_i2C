@@ -375,6 +375,7 @@ void twi_handler(nrf_drv_twi_evt_t const * p_event, void * p_context)
 								if(!initialized)
 								{
 										initialized = true;  
+										return;
 								}
 								else if(reset == true)// read all incoming metadata
 								{  	
@@ -451,7 +452,16 @@ void twi_init (void)
 void initializeIMU(){
 		ret_code_t err_code;
 		uint8_t reg[2] = {0, 0};
-		initialized = true;
+		
+		// check if i2C communication is sucessful
+		err_code = nrf_drv_twi_tx(&m_twi_bno, BNO_ADDRESS, reg, sizeof(reg), false);  
+    APP_ERROR_CHECK(err_code);
+		nrf_delay_ms(10);
+		
+    while (!initialized){	
+      //SEGGER_RTT_printf(0,".");
+    }
+		SEGGER_RTT_printf(0,"IMU Available!\r\n");
 		
 		/*reset = true;
 		shtpData[0] = 5 & 0xFF;
@@ -475,7 +485,7 @@ void initializeIMU(){
 			nrf_delay_ms(1);
 		}*/
 		//nrf_delay_ms(1000);
-		requestProductID();
+		/*requestProductID();
 		// first four bytes are for the header
 		
 		while(requestID)
@@ -483,9 +493,9 @@ void initializeIMU(){
 			nrf_delay_ms(1);
 		}
 		
-    //err_code = nrf_drv_twi_tx(&m_twi_bno, BNO_ADDRESS, reg, sizeof(reg), false);  
-    //APP_ERROR_CHECK(err_code);
-		//nrf_delay_ms(10);
+    err_code = nrf_drv_twi_tx(&m_twi_bno, BNO_ADDRESS, reg, sizeof(reg), false);  
+    APP_ERROR_CHECK(err_code);
+		nrf_delay_ms(10);*/
 		
 		/*SEGGER_RTT_printf(0,"Initializing\r\n");
     while (!initialized){	
