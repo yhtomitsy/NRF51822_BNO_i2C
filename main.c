@@ -169,7 +169,7 @@ static uint8_t readSuccess = 0;                             // confirms quaterni
 static float q0,q1,q2,q3;                                		// quaternions q0 = qw 1 = i; 2 = j; 3 = k;
 static float h_est;                                      		// heading accurracy estimation
 static uint8_t stat_;                                    		// Status (0-3)
-uint8_t cargo[23] = {0}; 																	// holds in coming data
+uint8_t cargo[50] = {0}; 																	// holds in coming data
 static float quatI = 0;
 static float quatJ = 0;
 static float quatK = 0;
@@ -377,21 +377,28 @@ void twi_handler(nrf_drv_twi_evt_t const * p_event, void * p_context)
 										initialized = true;  
 										return;
 								}
-								else if(reset == true)// read all incoming metadata
+								else 
+									
+								err_code = nrf_drv_twi_rx(&m_twi_bno, BNO_ADDRESS, cargo, sizeof(cargo));
+								SEGGER_RTT_printf(0,"Err code: %d\r\n", err_code);
+								//APP_ERROR_CHECK(err_code);	
+								
+								
+								/*if(reset == true)// read all incoming metadata
 								{  	
 										err_code = nrf_drv_twi_rx(&m_twi_bno, BNO_ADDRESS, cargo, 4);
 										APP_ERROR_CHECK(err_code);
 										i2C_event++;
-										/*for(uint8_t i = 0; i < 23; i++)SEGGER_RTT_printf(0,"%d,", cargo[i]);
-										SEGGER_RTT_printf(0,"\r\n");*/
+										for(uint8_t i = 0; i < 23; i++)SEGGER_RTT_printf(0,"%d,", cargo[i]);
+										SEGGER_RTT_printf(0,"\r\n");*
 								}
 								else if(requestID == true)
 								{
 										err_code = nrf_drv_twi_rx(&m_twi_bno, BNO_ADDRESS, cargo, sizeof(cargo));
 										APP_ERROR_CHECK(err_code);
-										/*for(uint8_t i = 0; i < 23; i++)SEGGER_RTT_printf(0,"%d,", cargo[i]);
-										SEGGER_RTT_printf(0,"\r\n");*/
-								}
+										for(uint8_t i = 0; i < 23; i++)SEGGER_RTT_printf(0,"%d,", cargo[i]);
+										SEGGER_RTT_printf(0,"\r\n");*
+								}*/
 						}
 						else{
 								if(reset == true)// read all incoming metadata
@@ -400,12 +407,13 @@ void twi_handler(nrf_drv_twi_evt_t const * p_event, void * p_context)
 										int16_t dataLength = ((uint16_t)cargo[1] << 8 | cargo[0]);
 										dataLength &= ~(1 << 15); //Clear the MSbit.
 										SEGGER_RTT_printf(0,"%d\r\n",dataLength);	
-										/*if(i2C_event == 3) reset = false;
-										
+										err_code = nrf_drv_twi_rx(&m_twi_bno, BNO_ADDRESS, (uint8_t*)&cargo, sizeof(cargo));
+										if(i2C_event == 6) reset = false;
 										i2C_event++;
+										
 										for(uint8_t i = 0; i < 23; i++)SEGGER_RTT_printf(0,"%d,", cargo[i]);
 										SEGGER_RTT_printf(0,"\r\n");
-										err_code = nrf_drv_twi_rx(&m_twi_bno, BNO_ADDRESS, (uint8_t*)&cargo, sizeof(cargo));
+										/*err_code = nrf_drv_twi_rx(&m_twi_bno, BNO_ADDRESS, (uint8_t*)&cargo, sizeof(cargo));
 										APP_ERROR_CHECK(err_code);*/
 										
 								}
@@ -463,37 +471,20 @@ void initializeIMU(){
     }
 		SEGGER_RTT_printf(0,"IMU Available!\r\n");
 		
-		/*reset = true;
-		shtpData[0] = 5 & 0xFF;
-		shtpData[1] = 5 >> 8;
-		shtpData[2] = 1;
-		shtpData[3] = sequenceNumber[1]++;
-		shtpData[4] = 1;
-		
-		err_code = nrf_drv_twi_tx(&m_twi_bno, BNO_ADDRESS, shtpData, sizeof(shtpData), false); 
-		APP_ERROR_CHECK(err_code);*/
-		
-		/*reset = true;
-		SEGGER_RTT_printf(0,"Resetting IMU\r\n");
-		shtpData[0+4] = 1; //Reset
-		//Attempt to start communication with sensor
-		sendPacket_IMU(CHANNEL_EXECUTABLE, 5); //Transmit packet on channel 1, 5 bytes (4 header bytes, 1 data byte)*/
-		
-		/*resetIMU();
+		resetIMU();
 		while(reset)
 		{
 			nrf_delay_ms(1);
-		}*/
-		//nrf_delay_ms(1000);
-		/*requestProductID();
-		// first four bytes are for the header
+		}
 		
+		//nrf_delay_ms(1000);
+		requestProductID();
 		while(requestID)
 		{
 			nrf_delay_ms(1);
 		}
 		
-    err_code = nrf_drv_twi_tx(&m_twi_bno, BNO_ADDRESS, reg, sizeof(reg), false);  
+    /*err_code = nrf_drv_twi_tx(&m_twi_bno, BNO_ADDRESS, reg, sizeof(reg), false);  
     APP_ERROR_CHECK(err_code);
 		nrf_delay_ms(10);*/
 		

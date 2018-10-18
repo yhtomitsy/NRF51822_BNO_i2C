@@ -40,9 +40,9 @@ compiling main.c...
                   /* Read 4 bytes from the specified address. 
 ..\..\main.c(346): warning:  #177-D: variable "m_sample" was declared but never referenced
       static sample_t m_sample;
-..\..\main.c(666): warning:  #9-D: nested comment is not allowed
+..\..\main.c(657): warning:  #9-D: nested comment is not allowed
           /* Start transaction with a slave with the specified address. */
-..\..\main.c(169): warning:  #177-D: variable "q0" was declared but never referenced
+..\..\main.c: 19 warnings, 0 errors
   static float q0,q1,q2,q3;                                		// quaternions q0 = qw 1 = i; 2 = j; 3 = k;
 ..\..\main.c(169): warning:  #177-D: variable "q1" was declared but never referenced
   static float q0,q1,q2,q3;                                		// quaternions q0 = qw 1 = i; 2 = j; 3 = k;
@@ -60,17 +60,16 @@ compiling main.c...
   static float quatK = 0;
 ..\..\main.c(176): warning:  #550-D: variable "quatReal" was set but never used
   static float quatReal = 0;
-..\..\main.c(514): warning:  #177-D: function "set_feature_cmd_QUAT" was declared but never referenced
+..\..\main.c(505): warning:  #177-D: function "set_feature_cmd_QUAT" was declared but never referenced
   static void set_feature_cmd_QUAT()// quat_report determines the kind of quaternions (see data sheets)
 ..\..\main.c(235): warning:  #177-D: function "uart_config" was declared but never referenced
   static void uart_config(void)
-..\..\main.c(527): warning:  #177-D: function "get_QUAT" was declared but never referenced
+..\..\main.c(518): warning:  #177-D: function "get_QUAT" was declared but never referenced
   static void get_QUAT()
-..\..\main.c: 19 warnings, 0 errors
 linking...
-Program Size: Code=4792 RO-data=304 RW-data=148 ZI-data=5428  
+Program Size: Code=5032 RO-data=304 RW-data=148 ZI-data=5452  
 FromELF: creating hex file...
-".\_build\nrf51422_xxac.axf" - 0 Error(s), 19 Warning(s).
+".\_build\nrf51422_xxac.axf" - 0 Error(s), 18 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -100,7 +99,7 @@ Package Vendor: NordicSemiconductor
       Source file:   Device\Source\arm\arm_startup_nrf51.s
       Source file:   Device\Source\system_nrf51.c
       Include file:  Device\Include\system_nrf51.h
-Build Time Elapsed:  00:00:00
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>
